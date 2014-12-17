@@ -503,6 +503,17 @@ public final class DiskLruCache implements Closeable {
     executorService.submit(cleanupCallable);
   }
 
+  public synchronized Set getKeys() {
+      Set keys = null;
+      if (lruEntries != null) {
+          Set keySet = lruEntries.keySet();
+          if (keySet != null) {
+              keys = new HashSet<String>(keySet);
+          }
+      }
+      return keys;
+  }
+
   /**
    * Returns the number of bytes currently being used to store the values in
    * this cache. This may be greater than the max size if a background
